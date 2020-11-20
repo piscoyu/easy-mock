@@ -42,29 +42,6 @@
         <a href="https://github.com/easy-mock/easy-mock" target="_blank" class="link">GitHub</a>
         <p v-if="copyright">{{copyright}}</p>
       </div>
-      <transition name="fade">
-        <div class="fullscreen-by" v-if="wallpaperCopyright">
-          <div v-if="wallpaperCopyright.name === 'Bing'">
-            Photo by
-            <a :href="wallpaperCopyright.link" target="_blank">
-              <strong>{{wallpaperCopyright.name}}</strong>
-            </a>
-          </div>
-          <div v-else>
-            Photo by
-            <a :href="wallpaperCopyright.link" target="_blank">
-              <strong>{{wallpaperCopyright.name}}</strong>
-            </a>
-            <strong> / </strong>
-            <a href="https://unsplash.com" target="_blank">
-              <strong>Unsplash</strong>
-            </a>
-            <a :href="wallpaperCopyright.link" target="_blank" class="avatar">
-              <img :src="wallpaperCopyright.profileImage">
-            </a>
-          </div>
-        </div>
-      </transition>
       <div class="about-btn" @click="page = 1">{{$tc('p.login.about', 1)}}</div>
     </div>
 
@@ -190,12 +167,9 @@ export default {
       wallpaperVisible: false
     }
   },
-  asyncData ({ store }) {
-    return store.dispatch('wallpaper/FETCH')
-  },
   mounted () {
     const img = new Image()
-    img.src = this.$store.state.wallpaper.url
+    img.src = '/public/images/background.jpg'
     img.onload = () => {
       this.wallpaperVisible = true
       this.$nextTick(() => {
@@ -203,11 +177,6 @@ export default {
         this.$refs.wallpaper.style.backgroundSize = 'cover'
         this.$refs.wallpaper.style.backgroundPosition = '50% 50%'
       })
-    }
-  },
-  computed: {
-    wallpaperCopyright () {
-      return this.$store.state.wallpaper.copyright
     }
   },
   watch: {

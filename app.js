@@ -41,7 +41,6 @@ app
         '/api/u/register',
         '/api/mock/by_projects',
         '/api/mock/export',
-        '/api/wallpaper'
       ]).test(ctx.path)
     }
     return true

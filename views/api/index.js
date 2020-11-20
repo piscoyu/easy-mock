@@ -135,10 +135,6 @@ const createExportForm = (url, data) => {
   document.body.removeChild(form)
 }
 
-const util = {
-  wallpaper: config => createAPI('/wallpaper', 'get', config)
-}
-
 const u = {
   getList: config => createAPI('/u', 'get', config),
   login: config => createAPI('/u/login', 'post', config),
@@ -180,7 +176,6 @@ export {
   u,
   project,
   mock,
-  util,
   group,
   dashboard,
   initAPI

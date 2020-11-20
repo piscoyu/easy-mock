@@ -35,7 +35,6 @@ exports.mock = mockRouter
   .all('*', middleware.mockFilter, rate, restc, mock.getMockAPI)
 
 exports.api = apiRouter
-  .get('/wallpaper', util.wallpaper)
   .post('/upload', util.upload)
 
   .get('/dashboard', dashboard.list)

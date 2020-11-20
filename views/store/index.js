@@ -8,7 +8,6 @@ import mock from './modules/mock'
 import group from './modules/group'
 import project from './modules/project'
 import dashboard from './modules/dashboard'
-import wallpaper from './modules/wallpaper'
 
 Vue.use(Vuex)
 
@@ -79,13 +78,6 @@ export function createStore () {
           users: []
         },
         ...dashboard
-      },
-      wallpaper: {
-        state: {
-          copyright: null,
-          url: ''
-        },
-        ...wallpaper
       }
     }
   })

@@ -8,27 +8,6 @@ const moment = require('moment')
 const app = require('../../app')
 const spt = require('../support')
 
-jest.mock('lru-cache', () => {
-  return function () {
-    return {
-      set: () => {},
-      get: jest.fn()
-        .mockImplementationOnce(() => ({
-          code: 200,
-          success: true,
-          message: 'success',
-          data: {
-            type: 'bing',
-            data: [{
-              url: 'http://cache.com/l.png',
-              copyrightlink: 'http://cache.com/l.png'
-            }]
-          }
-        }))
-    }
-  }
-})
-
 jest.mock('axios', () => ({
   get: jest.fn()
     .mockImplementationOnce(() => Promise.resolve({
@@ -49,45 +28,6 @@ describe('test/controllers/util.test.js', () => {
   beforeAll(async () => {
     user = await spt.createUser()
     request = spt.createRequest(app.listen(), user.token)
-  })
-
-  describe('wallpaper', () => {
-    test('从缓存获取', async () => {
-      const res = await request('/api/wallpaper')
-
-      const data = res.body.data
-      expect(data.data).toHaveLength(1)
-      expect(data.data[0]).toEqual({
-        url: 'http://cache.com/l.png',
-        copyrightlink: 'http://cache.com/l.png'
-      })
-      expect(data.type).toBe('bing')
-    })
-
-    test('获取 Bing 的壁纸', async () => {
-      const res = await request('/api/wallpaper')
-
-      const data = res.body.data
-      expect(data.data).toHaveLength(1)
-      expect(data.data[0]).toEqual({
-        url: 'http://bing.com/l.png',
-        copyrightlink: 'http://bing.com/l.png'
-      })
-      expect(data.type).toBe('bing')
-    })
-
-    test('异常处理', async () => {
-      const res = await request('/api/wallpaper')
-
-      const data = res.body.data
-
-      expect(data.data).toHaveLength(1)
-      expect(data.data[0]).toEqual({
-        url: '/az/hprichbg/rb/SWFC_ZH-CN9558503653_1920x1080.jpg',
-        copyrightlink: '/search?q=%e4%b8%8a%e6%b5%b7%e4%b8%96%e7%95%8c%e9%87%91%e8%9e%8d%e4%b8%ad%e5%bf%83&form=hpcapt&mkt=zh-cn'
-      })
-      expect(data.type).toBe('bing')
-    })
   })
 
   describe('upload', () => {
